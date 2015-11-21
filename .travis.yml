@@ -20,12 +20,9 @@ matrix:
       sudo: required
       dist: trusty
     - os: osx
-  allow_failures:
-    - env: CXX_OLEVEL=0 RCPP_VER=cran
-    - env: CXX_OLEVEL=3 RCPP_VER=github
-    - compiler: gcc
 
 before_install:
+  - exit 1
   - echo -e "#\x21/bin/sh\n\$1 &\nPROCESS=\"\$!\"\nwhile :\ndo\n  RESULT=\`ps -p \${PROCESS} -o comm=\`" > wait4.sh
   - echo -e "  if [ -z \"\${RESULT}\" ]; then\n    wait \${PROCESS}; exit \$?\n  else\n    echo \"-\"; sleep 10\n  fi\ndone\nexit \$?" >> wait4.sh
   - more wait4.sh
@@ -53,13 +50,6 @@ before_script:
   - more ./rstan/R_Makevars
   - mkdir -p ~/.R/; cat ./rstan/R_Makevars > ~/.R/Makevars
   - more ~/.R/Makevars
-
-notifications:
-  email:
-    # recipients:
-      # - stan-buildbot@googlegroups.com
-    on_success: change
-    on_failure: always
 
 script:
   - cd rstan 
