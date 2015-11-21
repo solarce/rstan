@@ -8,12 +8,6 @@ cache:
 language: r
 pandoc: false
 
-os:
-  - linux
-    sudo: required
-    dist: trusty
-  - osx
-
 env:
   global:
     - STAN_BRANCH=master
@@ -21,6 +15,11 @@ env:
     - CXX_OLEVEL=2 RCPP_VER=cran CXX=clang++
 
 matrix:
+  include:
+    - os: linux
+      sudo: required
+      dist: trusty
+    - os: osx
   allow_failures:
     - env: CXX_OLEVEL=0 RCPP_VER=cran
     - env: CXX_OLEVEL=3 RCPP_VER=github
